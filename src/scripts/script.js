@@ -1,5 +1,5 @@
 // define API URL
-const urlAPI = 'http://localhost/woocommerce-licencekey/';
+const urlAPI = 'http://localhost:8000/';
 
 // get Nonce value
 const getNonce = fetch(urlAPI + 'api/get_nonce/?controller=user&method=register',
@@ -12,10 +12,12 @@ const getNonce = fetch(urlAPI + 'api/get_nonce/?controller=user&method=register'
   })
   .catch(error => console.warn(error));
 
+
 const resultNonce = async () => {
   let nonce = await getNonce;
   return nonce.nonce;
 };
+
 
 // Register User
 let data = {

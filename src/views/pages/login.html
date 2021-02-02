@@ -14,8 +14,7 @@
                         <div class="card-header">Đăng Nhập</div>
 
                         <div class="card-body">
-                            <form method="POST" action="">
-
+                            <form method="" action="" class="login-form">
                                 <div class="form-group row">
                                     <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail</label>
 
@@ -58,5 +57,30 @@
 
 </div>
 @@include('../layouts/scripts.html')
+<script>
+  const urlAPI = 'http://localhost:8000/';
+  let cookie = localStorage.getItem('cookie');
+  let dataLogin = {
+    cookie: cookie,
+    insecure: 'cool'
+  };
+
+  $('.login-form').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: urlAPI + 'api/user/get_currentuserinfo',
+      type: 'POST',
+      data: dataLogin
+    }).done(function(data) {
+       if (data.status === 'ok') {
+         localStorage.setItem('login-success', true)
+         localStorage.setItem('username', data.user.username)
+         window.location.href = "http://localhost:9000/index.html";
+       }
+    });
+  });
+
+</script>
 </body>
 </html>

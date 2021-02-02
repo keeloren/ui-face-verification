@@ -14,12 +14,12 @@
                         <div class="card-header">Đăng Ký</div>
 
                         <div class="card-body">
-                            <form method="POST" action="">
+                            <form method="" action="" class="register-form">
 
                                 <div class="form-group row">
                                     <label for="name" class="col-md-4 col-form-label text-md-right">Tên</label>
                                     <div class="col-md-6">
-                                        <input id="name" type="text" class="form-control" name="name" value="">
+                                        <input id="name" type="text" class="form-control" name="name" value="" required>
                                         <span class="invalid-feedback" role="alert">
                                         <strong></strong>
                                     </span>
@@ -29,7 +29,7 @@
                                 <div class="form-group row">
                                     <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail</label>
                                     <div class="col-md-6">
-                                        <input id="email" type="email" class="form-control" name="email" value="">
+                                        <input id="email" type="email" class="form-control" name="email" value="" required>
                                         <span class="invalid-feedback" role="alert">
                                         <strong></strong>
                                     </span>
@@ -39,18 +39,10 @@
                                 <div class="form-group row">
                                     <label for="password" class="col-md-4 col-form-label text-md-right">Mật Khẩu</label>
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control" name="password">
+                                        <input id="password" type="password" class="form-control" name="password" required>
                                         <span class="invalid-feedback" role="alert">
                                         <strong></strong>
                                     </span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Nhập lại mật khẩu</label>
-
-                                    <div class="col-md-6">
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                     </div>
                                 </div>
 
@@ -71,5 +63,55 @@
 
 </div>
 @@include('../layouts/scripts.html')
+<script>
+  // define API URL
+  const urlAPI = 'http://localhost:8000/';
+  var nonce = '';
+
+  $('.register-form').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: urlAPI + 'api/get_nonce/?controller=user&method=register',
+      type: 'GET',
+    }).done(function(data) {
+      nonce = data.nonce;
+      const username = $('[name="name"]').val();
+      const email = $('[name="email"]').val();
+      const userPass = $('[name="password"]').val();
+
+      let dataRegister = {
+        username,
+        email,
+        insecure: 'cool',
+        nonce: nonce,
+        user_pass: userPass
+      };
+
+      $.ajax({
+        url: urlAPI + 'api/user/register',
+        type: 'GET',
+        data: dataRegister
+      }).done(function(data) {
+        let cookie = data.cookie;
+        localStorage.setItem('cookie', cookie)
+        window.location.href = "http://localhost:9000/login.html";
+      });
+    });
+  });
+
+
+  function convertData (data) {
+    var formBody = [];
+    for (var property in data) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(data[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    return formBody;
+  }
+</script>
+
 </body>
 </html>

@@ -6,20 +6,59 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto show-menu">
                 <li class="nav-item">
                     <a class="nav-link" href="./index.html">HOME</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="./face_verification.html">Face Verification</a>
+                </li>
+                <li class="nav-item" id="menu-login">
                     <a class="nav-link" href="./login.html">Đăng nhập</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./register.html">Đăng ký</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./face_verification.html">Face Verification</a>
+                    <a class="nav-link" id="show-name" href="./register.html">Đăng ký</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<script>
+  $(document).ready(function() {
+    let html = '';
+
+    let checkLogin = localStorage.getItem('login-success');
+    let username = localStorage.getItem('username');
+    if (checkLogin) {
+      html = '<li class="nav-item">\n' +
+        '                    <a class="nav-link" href="./index.html">HOME</a>\n' +
+        '                </li>\n' +
+        '                <li class="nav-item">\n' +
+        '                    <a class="nav-link" href="./face_verification.html">Face Verification</a>\n' +
+        '                </li>\n' +
+        '                <li class="nav-item">\n' +
+        '                    <a class="nav-link logout" href="#">' + username + '</a>\n' +
+        '                </li>';
+    } else {
+      html = '<li class="nav-item">\n' +
+        '                    <a class="nav-link" href="./index.html">HOME</a>\n' +
+        '                </li>\n' +
+        '                <li class="nav-item" id="menu-login">\n' +
+        '                    <a class="nav-link" href="./login.html">Đăng nhập</a>\n' +
+        '                </li>\n' +
+        '                <li class="nav-item">\n' +
+        '                    <a class="nav-link" id="show-name" href="./register.html">Đăng ký</a>\n' +
+        '                </li>';
+    }
+
+    $('.show-menu').html(html);
+
+
+    $('.logout').on('click', function () {
+      let clearLogi = localStorage.removeItem('login-success');
+      let clearCookie = localStorage.removeItem('cookie');
+      window.location.href = "http://localhost:9000/index.html";
+    })
+  });
+</script>
