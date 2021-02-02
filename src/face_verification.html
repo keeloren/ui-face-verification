@@ -62,12 +62,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="./face_verification.html">Face Verification</a>
                 </li>
-                <li class="nav-item" id="menu-login">
-                    <a class="nav-link" href="./login.html">Đăng nhập</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="show-name" href="./register.html">Đăng ký</a>
-                </li>
             </ul>
         </div>
     </div>
@@ -79,29 +73,29 @@
 
     let checkLogin = localStorage.getItem('login-success');
     let username = localStorage.getItem('username');
-    if (checkLogin) {
-      html = '<li class="nav-item">\n' +
-        '                    <a class="nav-link" href="./index.html">HOME</a>\n' +
-        '                </li>\n' +
-        '                <li class="nav-item">\n' +
-        '                    <a class="nav-link" href="./face_verification.html">Face Verification</a>\n' +
-        '                </li>\n' +
-        '                <li class="nav-item">\n' +
-        '                    <a class="nav-link logout" href="#">' + username + '</a>\n' +
-        '                </li>';
-    } else {
-      html = '<li class="nav-item">\n' +
-        '                    <a class="nav-link" href="./index.html">HOME</a>\n' +
-        '                </li>\n' +
-        '                <li class="nav-item" id="menu-login">\n' +
-        '                    <a class="nav-link" href="./login.html">Đăng nhập</a>\n' +
-        '                </li>\n' +
-        '                <li class="nav-item">\n' +
-        '                    <a class="nav-link" id="show-name" href="./register.html">Đăng ký</a>\n' +
-        '                </li>';
-    }
-
-    $('.show-menu').html(html);
+    // if (checkLogin) {
+    //   html = '<li class="nav-item">\n' +
+    //     '                    <a class="nav-link" href="./index.html">HOME</a>\n' +
+    //     '                </li>\n' +
+    //     '                <li class="nav-item">\n' +
+    //     '                    <a class="nav-link" href="./face_verification.html">Face Verification</a>\n' +
+    //     '                </li>\n' +
+    //     '                <li class="nav-item">\n' +
+    //     '                    <a class="nav-link logout" href="#">' + username + '</a>\n' +
+    //     '                </li>';
+    // } else {
+    //   html = '<li class="nav-item">\n' +
+    //     '                    <a class="nav-link" href="./index.html">HOME</a>\n' +
+    //     '                </li>\n' +
+    //     '                <li class="nav-item" id="menu-login">\n' +
+    //     '                    <a class="nav-link" href="./login.html">Đăng nhập</a>\n' +
+    //     '                </li>\n' +
+    //     '                <li class="nav-item">\n' +
+    //     '                    <a class="nav-link" id="show-name" href="./register.html">Đăng ký</a>\n' +
+    //     '                </li>';
+    // }
+    //
+    // $('.show-menu').html(html);
 
 
     $('.logout').on('click', function () {
@@ -115,26 +109,32 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12">
-                    <h2 class="text-center" style="margin-bottom: 50px">Face Verification</h2>
+                    <h1 class="text-center" style="margin-bottom: 50px">Face Verification</h1>
 
                     <!--<div class="row" style="margin-bottom: 50px">-->
-                        <!--<label> Licence Key: </label>-->
-                        <!--<input type="text" class="form-control">-->
+                    <!--<label> Licence Key: </label>-->
+                    <!--<input type="text" class="form-control">-->
                     <!--</div>-->
 
                     <div class="row">
-                        <form>
+                        <form class="verification-form" enctype="multipart/form-data">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label> Hình 1</label>
-                                        <input type="file" class="form-control-file">
+                                        <input type="file" class="form-control-file" name="file_1" id="file_1">
+                                        <span style="color: red" class="error-validation-1">Sai định dạng</span>
+                                        <span style="color: red" class="error-empty-1">Chọn file</span>
+                                        <span style="color: red" class="error-size-1">Chọn file < 5MB</span>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label> Hình 2</label>
-                                        <input type="file" class="form-control-file">
+                                        <input type="file" class="form-control-file" name="file_2" id="file_2">
+                                        <span style="color: red" class="error-validation-2">Sai định dạng</span>
+                                        <span style="color: red" class="error-empty-2">Chọn file</span>
+                                        <span style="color: red" class="error-size-2">Chọn file < 5MB</span>
                                     </div>
                                 </div>
                             </div>
@@ -145,6 +145,17 @@
                             </div>
                         </form>
                     </div>
+                    <div class="row" style="display: revert;">
+                        <div>
+                            <h3>Kết quả: <b class="result"></b></h3>
+                        </div>
+                        <div>
+                            <h3>Giống nhau: <b class="same"></b></h3>
+                            <div>
+                                <h3>Độ chính xác: <b class="percent-same"></b></h3>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -153,4 +164,123 @@
 </div>
 
 </body>
+<!-- build:js script/script.min.js -->
+<script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<!--<script type="text/javascript" src="scripts/script.js"></script>-->
+<!-- endbuild -->
+
+<script>
+
+    $(document).ready(function(){
+      $('.error-validation-1').hide();
+      $('.error-validation-2').hide();
+      $('.error-empty-1').hide();
+      $('.error-empty-2').hide();
+      $('.error-size-1').hide();
+      $('.error-size-2').hide();
+    });
+
+    var validationSize = true;
+    var validationType = true;
+
+    const urlAPI = 'http://localhost:8000/';
+
+    $('.verification-form').on('submit', function (e) {
+
+    $('.same').html('');
+    $('.percent-same').html('');
+    $('.result').html('');
+
+    e.preventDefault();
+    let formData = new FormData();
+    let file_1 = $('#file_1')[0].files[0];
+    let file_2 = $('#file_2')[0].files[0];
+
+
+    if (!file_1) {
+        $('.error-empty-1').show();
+    }
+    if (!file_2) {
+        $('.error-empty-2').show();
+    }
+
+    if (file_1) {
+        $('.error-empty-1').hide();
+    }
+    if (file_2) {
+        $('.error-empty-2').hide();
+    }
+
+    if(file_1 && file_2) {
+
+      if (file_1.size / 1024 > 5000) {
+        $('.error-size-1').show();
+        validationSize = false;
+      } else {
+        $('.error-size-1').hide();
+        validationSize = true;
+      }
+
+      if (file_2.size / 1024 > 5000) {
+        $('.error-size-2').show();
+        validationSize = false;
+      } else {
+        $('.error-size-2').hide();
+        validationSize = true;
+      }
+
+      let exntensions = ["image/jpeg", "image/png", "image/jpg"];
+
+      if (!exntensions.indexOf(file_1.type) < 0) {
+        $('.error-validation-1').show();
+        validationType = false;
+      } else {
+        $('.error-validation-1').hide();
+        validationType = true;
+      }
+
+      if (exntensions.indexOf(file_2.type) < 0) {
+        $('.error-validation-2').show();
+        validationType = false;
+      } else {
+        $('.error-validation-2').hide();
+        validationType = true;
+      }
+
+
+      formData.append('file', file_1);
+      formData.append('file', file_2);
+
+      if (validationSize && validationType) {
+        $.ajax({
+          url: 'http://14.241.120.239:8001/smart-check/checkface',
+          type: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false
+        }).done(function (data) {
+          let message = '';
+
+          if (data.message === 'request successfully') {
+            message = 'Thực thi thành công.';
+          } else {
+            message = 'Thực thi thất bại.';
+          }
+
+          if (data.code === '200') {
+            $('.same').html(data.data.isMatch === true ? 'Giống' : 'Không');
+            $('.percent-same').html(data.data.similarity + '%');
+          }
+
+          $('.result').html(message);
+
+        });
+      }
+    }
+
+  });
+
+</script>
 </html>

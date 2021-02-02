@@ -13,12 +13,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="./face_verification.html">Face Verification</a>
                 </li>
-                <li class="nav-item" id="menu-login">
-                    <a class="nav-link" href="./login.html">Đăng nhập</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="show-name" href="./register.html">Đăng ký</a>
-                </li>
             </ul>
         </div>
     </div>
@@ -30,29 +24,29 @@
 
     let checkLogin = localStorage.getItem('login-success');
     let username = localStorage.getItem('username');
-    if (checkLogin) {
-      html = '<li class="nav-item">\n' +
-        '                    <a class="nav-link" href="./index.html">HOME</a>\n' +
-        '                </li>\n' +
-        '                <li class="nav-item">\n' +
-        '                    <a class="nav-link" href="./face_verification.html">Face Verification</a>\n' +
-        '                </li>\n' +
-        '                <li class="nav-item">\n' +
-        '                    <a class="nav-link logout" href="#">' + username + '</a>\n' +
-        '                </li>';
-    } else {
-      html = '<li class="nav-item">\n' +
-        '                    <a class="nav-link" href="./index.html">HOME</a>\n' +
-        '                </li>\n' +
-        '                <li class="nav-item" id="menu-login">\n' +
-        '                    <a class="nav-link" href="./login.html">Đăng nhập</a>\n' +
-        '                </li>\n' +
-        '                <li class="nav-item">\n' +
-        '                    <a class="nav-link" id="show-name" href="./register.html">Đăng ký</a>\n' +
-        '                </li>';
-    }
-
-    $('.show-menu').html(html);
+    // if (checkLogin) {
+    //   html = '<li class="nav-item">\n' +
+    //     '                    <a class="nav-link" href="./index.html">HOME</a>\n' +
+    //     '                </li>\n' +
+    //     '                <li class="nav-item">\n' +
+    //     '                    <a class="nav-link" href="./face_verification.html">Face Verification</a>\n' +
+    //     '                </li>\n' +
+    //     '                <li class="nav-item">\n' +
+    //     '                    <a class="nav-link logout" href="#">' + username + '</a>\n' +
+    //     '                </li>';
+    // } else {
+    //   html = '<li class="nav-item">\n' +
+    //     '                    <a class="nav-link" href="./index.html">HOME</a>\n' +
+    //     '                </li>\n' +
+    //     '                <li class="nav-item" id="menu-login">\n' +
+    //     '                    <a class="nav-link" href="./login.html">Đăng nhập</a>\n' +
+    //     '                </li>\n' +
+    //     '                <li class="nav-item">\n' +
+    //     '                    <a class="nav-link" id="show-name" href="./register.html">Đăng ký</a>\n' +
+    //     '                </li>';
+    // }
+    //
+    // $('.show-menu').html(html);
 
 
     $('.logout').on('click', function () {
